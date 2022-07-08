@@ -29,6 +29,7 @@ import org.ocs.android.sections.OCSDrives;
 import org.ocs.android.sections.OCSHardware;
 import org.ocs.android.sections.OCSInputs;
 import org.ocs.android.sections.OCSJavaInfos;
+import org.ocs.android.sections.OCSGeolocation;
 import org.ocs.android.sections.OCSNetwork;
 import org.ocs.android.sections.OCSNetworks;
 import org.ocs.android.sections.OCSSection;
@@ -79,6 +80,7 @@ public class Inventory {
     private OCSVideos videos;
     private OCSInputs inputs;
     private OCSJavaInfos javainfos;
+    private OCSGeolocation geolocation;
     private OCSSims sims;
 
     // Log
@@ -133,6 +135,7 @@ public class Inventory {
         inputs = new OCSInputs(mCtx);
         ocslog.debug("OCSJavaInfos...");
         javainfos = new OCSJavaInfos();
+        geolocation = new OCSGeolocation(mCtx);
         ocslog.debug("OCSSims...");
         sims = new OCSSims(mCtx);
 
@@ -217,6 +220,7 @@ public class Inventory {
         strOut.append(hardware.toXML());
         strOut.append(inputs.toXML());
         strOut.append(javainfos.toXML());
+        strOut.append(geolocation.toXML());
         strOut.append(sims.toXML());
         strOut.append(networks.toXML());
         strOut.append(softwares.toXML());
@@ -238,7 +242,7 @@ public class Inventory {
                         bios.toString() +
                         drives.toString() +
                         storages.toString() +
-                        hardware.toString() +
+                        geolocation.toString() +
                         networks.toString() +
                         videos.toString() +
                         softwares.toString();
@@ -265,6 +269,7 @@ public class Inventory {
         monRetour.put("STORAGES", storages.getSections());
         monRetour.put("VIDEOS", videos.getSections());
         monRetour.put("JAVAINFOS", javainfos.getSections());
+        monRetour.put("GEOLOCATION", geolocation.getSections());
         monRetour.put("SIM", sims.getSections());
 
         return monRetour;
