@@ -20,6 +20,8 @@
  */
 package org.ocs.android.sections;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Properties;
@@ -51,7 +53,9 @@ import android.location.Location;
 //import android.location.LocationListener;
 import android.location.LocationManager;
 
-
+//NOTE GEOCODE
+import android.location.Geocoder;
+import android.location.Address; 
 
 //Number
 import java.text.Format;
@@ -99,9 +103,10 @@ public class OCSGeolocation implements OCSSectionInterface {
     private String simoperator; 
     private String simopname;
     private String simserial;  
+//time
 
-
-//
+//NOTE GEOCODE
+    private boolean geopresent;
 
 // NOTE LOG
     private static final String TAG = "GeoDebugging";
@@ -229,10 +234,44 @@ public class OCSGeolocation implements OCSSectionInterface {
 
 // TODO GEOFENCE
 
+//Set Address
+        try {
+                Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+                List<Address> addresses = geocoder.getFromLocation(lat,lon, 1);
 
+                if (addresses != null && addresses.size() > 0) {
 
+                    String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                    Integer addressline = addresses.get(0).getMaxAddressLineIndex(); //
+                    String city = addresses.get(0).getLocality();
+                    String state = addresses.get(0).getAdminArea();
+                    String country = addresses.get(0).getCountryName();
+                    String postalCode = addresses.get(0).getPostalCode();
+                    String phonenumber = addresses.get(0).getPhone();
+                    String subAdminArea = addresses.get(0).getSubAdminArea(); // Only if available else return NULL
+                    String subLocality = addresses.get(0).getSubLocality(); // Only if available else return NULL
+                    String thoroughfare = addresses.get(0).getThoroughfare(); // Only if available else return NULL
+                    String subThoroughfare = addresses.get(0).getSubThoroughfare(); // Only if available else return NULL
+                    String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
 
+                    Log.d(TAG, "getAddress:  address " + address);
+                    Log.d(TAG, "getAddress:  addressline " + addressline.toString());
+                    Log.d(TAG, "getAddress:  city " + city);
+                    Log.d(TAG, "getAddress:  state " + state);
+                    Log.d(TAG, "getAddress:  postalCode " + postalCode);
+                    Log.d(TAG, "getAddress:  phonenumber " + phonenumber);
+                    Log.d(TAG, "getAddress:  country " + country);
+                    Log.d(TAG, "getAddress:  subAdminArea " + subAdminArea);
+                    Log.d(TAG, "getAddress:  subLocality " + subLocality);
+                    Log.d(TAG, "getAddress:  getThoroughfare " + thoroughfare);
+                    Log.d(TAG, "getAddress:  houseNumber " + subThoroughfare);
+                    Log.d(TAG, "getAddress:  knownName " + knownName);
 
+                }
+         } 
+        catch (IOException e) {
+            e.printStackTrace();
+        }   
 
 
 
@@ -259,8 +298,8 @@ public class OCSGeolocation implements OCSSectionInterface {
         country = simcountry;
         countrycode = Locale.getDefault().getCountry();
         region = "VER";
-        regionname = "Veracruz";
-        city = "XOrizaba";
+        regionname = "state";
+//        city = "XOrizaba";
         zip = "91500";
 //        latitude = "19.521100";
 //        longitude = "-96.922310";
@@ -268,6 +307,7 @@ public class OCSGeolocation implements OCSSectionInterface {
         isp = simopname;
 //        timehost = (String) DateFormat.format("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", System.currentTimeMillis());
         timehost = (String) DateFormat.format("yyyy-MM-dd'T'HH:mm:ss", System.currentTimeMillis());
+//        timehost = hour.ToUniversalTime().ToString("s");
 
 
 
