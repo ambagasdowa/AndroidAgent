@@ -106,7 +106,19 @@ public class OCSGeolocation implements OCSSectionInterface {
 //time
 
 //NOTE GEOCODE
-    private boolean geopresent;
+
+   private String address ;
+   private Integer addressline ;
+   private String state ;
+   private String postalCode ;
+   private String subAdminArea ;
+   private String subLocality ;
+   private String thoroughfare ;
+   private String subThoroughfare ;
+   private String knownName ;
+
+
+
 
 // NOTE LOG
     private static final String TAG = "GeoDebugging";
@@ -241,25 +253,25 @@ public class OCSGeolocation implements OCSSectionInterface {
 
                 if (addresses != null && addresses.size() > 0) {
 
-                    String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-                    Integer addressline = addresses.get(0).getMaxAddressLineIndex(); //
-                    String city = addresses.get(0).getLocality();
-                    String state = addresses.get(0).getAdminArea();
-                    String country = addresses.get(0).getCountryName();
-                    String postalCode = addresses.get(0).getPostalCode();
-                    String phonenumber = addresses.get(0).getPhone();
-                    String subAdminArea = addresses.get(0).getSubAdminArea(); // Only if available else return NULL
-                    String subLocality = addresses.get(0).getSubLocality(); // Only if available else return NULL
-                    String thoroughfare = addresses.get(0).getThoroughfare(); // Only if available else return NULL
-                    String subThoroughfare = addresses.get(0).getSubThoroughfare(); // Only if available else return NULL
-                    String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
+                   address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                   addressline = addresses.get(0).getMaxAddressLineIndex(); //
+                   city = addresses.get(0).getLocality();
+                   state = addresses.get(0).getAdminArea();
+                   country = addresses.get(0).getCountryName();
+                   postalCode = addresses.get(0).getPostalCode();
+//                   phonenumber = addresses.get(0).getPhone();
+                   subAdminArea = addresses.get(0).getSubAdminArea(); // Only if available else return NULL
+                   subLocality = addresses.get(0).getSubLocality(); // Only if available else return NULL
+                   thoroughfare = addresses.get(0).getThoroughfare(); // Only if available else return NULL
+                   subThoroughfare = addresses.get(0).getSubThoroughfare(); // Only if available else return NULL
+                   knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
 
                     Log.d(TAG, "getAddress:  address " + address);
                     Log.d(TAG, "getAddress:  addressline " + addressline.toString());
                     Log.d(TAG, "getAddress:  city " + city);
                     Log.d(TAG, "getAddress:  state " + state);
                     Log.d(TAG, "getAddress:  postalCode " + postalCode);
-                    Log.d(TAG, "getAddress:  phonenumber " + phonenumber);
+  //                  Log.d(TAG, "getAddress:  phonenumber " + phonenumber);
                     Log.d(TAG, "getAddress:  country " + country);
                     Log.d(TAG, "getAddress:  subAdminArea " + subAdminArea);
                     Log.d(TAG, "getAddress:  subLocality " + subLocality);
@@ -273,10 +285,6 @@ public class OCSGeolocation implements OCSSectionInterface {
             e.printStackTrace();
         }   
 
-
-
-
-
 	osmap = "https://www.openstreetmap.org/?mlat="+latitude+"&mlon="+longitude;
 	google = "https://www.google.com/maps/search/?api=1&query="+latitude+','+longitude;
 
@@ -287,7 +295,6 @@ public class OCSGeolocation implements OCSSectionInterface {
 	linkGoogle  = TextUtils.htmlEncode(agoogle.toString());
         
         hostname = TextUtils.htmlEncode(Build.MODEL.toString());
-
 //        name = sp.getProperty("java.vm.name") + sp.getProperty("java.vm.version");
         name = "GEOLOCATION";
 //        pathlevel = "";
@@ -295,12 +302,12 @@ public class OCSGeolocation implements OCSSectionInterface {
 //        home = sp.getProperty("java.home");
 //        hostname = Build.MODEL; 
 //        ip = "201.108.196.140";
-        country = simcountry;
+//        country = simcountry;
         countrycode = Locale.getDefault().getCountry();
-        region = "VER";
-        regionname = "state";
+        region = simcountry;
+        regionname = state;
 //        city = "XOrizaba";
-        zip = "91500";
+        zip = postalCode;
 //        latitude = "19.521100";
 //        longitude = "-96.922310";
         timezone = "America/Mexico_City";
@@ -357,8 +364,8 @@ public class OCSGeolocation implements OCSSectionInterface {
 
         s.setAttr("CLIENT", hostname);
         s.setAttr("IP", ip);
-        s.setAttr("PHONE", ip);
-        s.setAttr("IMEI", ip);
+        s.setAttr("PHONE", phonenumber);
+        s.setAttr("IMEI", device_id);
         s.setAttr("COUNTRY", country);
         s.setAttr("COUNTRYCODE", countrycode);
         s.setAttr("REGION", region);
@@ -369,15 +376,15 @@ public class OCSGeolocation implements OCSSectionInterface {
         s.setAttr("LONGITUDE", longitude);
         s.setAttr("TIMEZONE", timezone);
         s.setAttr("ISP", isp);
-        s.setAttr("ORG", isp);
-        s.setAttr("ASLABEL", isp);
+        s.setAttr("ORG", simopname);
+        s.setAttr("ASLABEL", simoperator);
         s.setAttr("OSMAP", linkOmap);
         s.setAttr("GOOGLE", linkGoogle);
-        s.setAttr("BING", linkGoogle);
-        s.setAttr("OSMOSE", linkGoogle);
-        s.setAttr("HERE", linkGoogle);
-        s.setAttr("SERVER_ONE", linkGoogle);
-        s.setAttr("SERVER_TWO", linkGoogle);
+        s.setAttr("BING", "");
+        s.setAttr("OSMOSE", "");
+        s.setAttr("HERE", "");
+        s.setAttr("SERVER_ONE", "");
+        s.setAttr("SERVER_TWO", address);
         s.setAttr("TIMEHOST",timehost);
 
         s.setTitle(name);
