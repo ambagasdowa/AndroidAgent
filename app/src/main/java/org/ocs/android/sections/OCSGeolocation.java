@@ -159,7 +159,7 @@ public class OCSGeolocation implements OCSSectionInterface {
         } else {
             device_id = mng.getDeviceId();
             simcountry = mng.getSimCountryIso();
-            simoperator = mng.getSimOperator();
+            simoperator = TextUtils.htmlEncode(mng.getSimOperator().toString());
             simopname = TextUtils.htmlEncode(mng.getSimOperatorName().toString());
             simserial = mng.getSimSerialNumber();
             phonenumber = mng.getLine1Number();
@@ -253,10 +253,10 @@ public class OCSGeolocation implements OCSSectionInterface {
 
                 if (addresses != null && addresses.size() > 0) {
 
-                   address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                   address = TextUtils.htmlEncode(addresses.get(0).getAddressLine(0).toString()); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
                    addressline = addresses.get(0).getMaxAddressLineIndex(); //
-                   city = addresses.get(0).getLocality();
-                   state = addresses.get(0).getAdminArea();
+                   city = TextUtils.htmlEncode(addresses.get(0).getLocality().toString());
+                   state = TextUtils.htmlEncode(addresses.get(0).getAdminArea().toString());
                    country = addresses.get(0).getCountryName();
                    postalCode = addresses.get(0).getPostalCode();
 //                   phonenumber = addresses.get(0).getPhone();
@@ -366,12 +366,13 @@ public class OCSGeolocation implements OCSSectionInterface {
         s.setAttr("IP", ip);
         s.setAttr("PHONE", phonenumber);
         s.setAttr("IMEI", device_id);
+        s.setAttr("ADDRESS", address);
         s.setAttr("COUNTRY", country);
         s.setAttr("COUNTRYCODE", countrycode);
         s.setAttr("REGION", region);
         s.setAttr("REGIONNAME", regionname);
         s.setAttr("CITY", city);
-        s.setAttr("ZIP", zip);
+        s.setAttr("ZIPCODE", zip);
         s.setAttr("LATITUDE", latitude );
         s.setAttr("LONGITUDE", longitude);
         s.setAttr("TIMEZONE", timezone);
@@ -384,7 +385,7 @@ public class OCSGeolocation implements OCSSectionInterface {
         s.setAttr("OSMOSE", "");
         s.setAttr("HERE", "");
         s.setAttr("SERVER_ONE", "");
-        s.setAttr("SERVER_TWO", address);
+        s.setAttr("SERVER_TWO", "");
         s.setAttr("TIMEHOST",timehost);
 
         s.setTitle(name);
@@ -402,7 +403,7 @@ public class OCSGeolocation implements OCSSectionInterface {
     }
 
     public String toXML() {
-// TODO we hacve a situation with the resulting xml in xiomi phones
+// TODO we hacve a situation with the resulting xml in chomi phones
 // xmllint --valid --encode utf-8 /tmp/geops.xml 2>&1 | tee /tmp/geops.log	
 // /tmp/geops.xml:1: validity error : Validation failed: no DTD found !
 
