@@ -379,13 +379,13 @@ public class OCSGeolocation implements OCSSectionInterface {
         s.setAttr("ISP", isp);
         s.setAttr("ORG", simopname);
         s.setAttr("ASLABEL", simoperator);
-        s.setAttr("OSMAP", linkOmap);
-        s.setAttr("GOOGLE", linkGoogle);
-        s.setAttr("BING", "");
-        s.setAttr("OSMOSE", "");
-        s.setAttr("HERE", "");
-        s.setAttr("SERVER_ONE", "");
-        s.setAttr("SERVER_TWO", "");
+//        s.setAttr("OSMAP", linkOmap);
+//        s.setAttr("GOOGLE", linkGoogle);
+//        s.setAttr("BING", "");
+//        s.setAttr("OSMOSE", "");
+//        s.setAttr("HERE", "");
+//        s.setAttr("SERVER_ONE", "");
+//        s.setAttr("SERVER_TWO", "");
         s.setAttr("TIMEHOST",timehost);
 
         s.setTitle(name);
