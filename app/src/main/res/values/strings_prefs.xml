@@ -46,7 +46,7 @@
     <string name="pref_header_server">Server</string>
     <string name="pref_title_serverurl">Server URL</string>
     <string name="pref_description_serverurl">OCS server address</string>
-    <string name="pref_default_serverurl">http://ocsinventory-ng.org/ocsinventory</string>
+    <string name="pref_default_serverurl">https://192.168.0.224/ocsinventory</string>
     <string name="pref_summaryOn_sslstrict">ON</string>
     <string name="pref_summaryOff_sslstrict">OFF</string>
     <string name="pref_title_sslstrict">SSL Control</string>
